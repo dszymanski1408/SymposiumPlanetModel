@@ -1,13 +1,19 @@
 import peasy.*; 
 
 PeasyCam cam;
- 
+
+void settings(){
+   fullScreen(P3D); 
+}
+
 void setup(){
-   size(1920,1080, P3D);
    cam = new PeasyCam(this, 2000);
 }
 
 void draw(){
-   ambientLight(255,255,255);
-   sphere(100);
+  background(0);
+  stroke(255,255,255);
+  fill(255,255,255);
+  ambientLight(255,255,255);
+  sphere(100);
 }
