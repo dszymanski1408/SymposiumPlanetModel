@@ -11,7 +11,7 @@ PImage mars;
 PImage earth;
 
 void settings(){
-   fullScreen(P3D, 2); 
+   fullScreen(P3D); 
 }
 
 void setup(){
@@ -21,15 +21,11 @@ void setup(){
   mercury = loadImage("mercuryTexMap.jpg");
   mars = loadImage("marsTexMap.jpg");
   earth = loadImage("earthTexMap.jpg");
-  //for loop can and should be changed, 5 is just how many planets I have atm.
-  for(int i = 0; i <= 5; i++){
-    planets.add(new Planet());
-  } 
-  planets.get(0).setPlanet(500, sun);
-  planets.get(1).setPlanet(60, mercury);
-  planets.get(2).setPlanet(100, venus);
-  planets.get(3).setPlanet(120, earth);
-  planets.get(4).setPlanet(90, mars);
+  planets.add(new Planet(100, sun));
+  planets.add(new Planet(100, mercury));
+  planets.add(new Planet(100, venus));
+  planets.add(new Planet(100, earth));
+  planets.add(new Planet(100, mars));
 }
 
 void draw(){
