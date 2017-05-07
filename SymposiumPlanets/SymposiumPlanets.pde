@@ -22,10 +22,10 @@ void setup(){
   mars = loadImage("marsTexMap.jpg");
   earth = loadImage("earthTexMap.jpg");
   planets.add(new Planet(100, sun));
-  planets.add(new Planet(100, mercury));
-  planets.add(new Planet(100, venus));
-  planets.add(new Planet(100, earth));
-  planets.add(new Planet(100, mars));
+  //planets.add(new Planet(100, mercury));
+  //planets.add(new Planet(100, venus));
+  //planets.add(new Planet(100, earth));
+  //planets.add(new Planet(100, mars));
 }
 
 void draw(){
