@@ -21,17 +21,22 @@ void setup(){
   mercury = loadImage("mercuryTexMap.jpg");
   mars = loadImage("marsTexMap.jpg");
   earth = loadImage("earthTexMap.jpg");
-  planets.add(new Planet(100, sun));
-  //planets.add(new Planet(100, mercury));
-  //planets.add(new Planet(100, venus));
-  //planets.add(new Planet(100, earth));
-  //planets.add(new Planet(100, mars));
+  planets.add(new Planet(300, sun, 0));
+  planets.add(new Planet(20, mercury, 300));
+  planets.add(new Planet(35, venus, 200));
+  planets.add(new Planet(70, earth, 200));
+  planets.add(new Planet(55, mars, 200));
 }
 
 void draw(){
   background(0);
   ambientLight(255,255,255);
-  for(int i = 0; i < planets.size(); i++){
+  pushMatrix();
+    translate(-100, 0);
+    planets.get(0).showPlanet();
+  popMatrix();
+  for(int i = 1; i < planets.size(); i++){
+    planets.get(i).drawEllipse(i);
     planets.get(i).showPlanet(); 
   }
 }
