@@ -6,17 +6,20 @@ class Planet{
   private float y; 
   private float topx;
   private float topy;
+  private float rotate;
   
-  Planet(float size, PImage image, int trans){
+  Planet(float size, PImage image, int trans, float rotate){
     noStroke();
     shape = createShape(SPHERE, size);
     shape.setTexture(image);
     this.trans = trans;
+    this.rotate = rotate;
   }
   
   public void showPlanet(){
      emissive(0,0,0);
      translate(trans, 0);
+     rotateX(degrees(rotate));
      shape(shape); 
   }
   

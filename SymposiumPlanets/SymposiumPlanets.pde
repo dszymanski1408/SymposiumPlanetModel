@@ -21,11 +21,11 @@ void setup(){
   mercury = loadImage("mercuryTexMap.jpg");
   mars = loadImage("marsTexMap.jpg");
   earth = loadImage("earthTexMap.jpg");
-  planets.add(new Planet(300, sun, 0));
-  planets.add(new Planet(20, mercury, 300));
-  planets.add(new Planet(35, venus, 200));
-  planets.add(new Planet(70, earth, 200));
-  planets.add(new Planet(55, mars, 200));
+  planets.add(new Planet(300, sun, 0, 7.25));
+  planets.add(new Planet(20, mercury, 300, 0.03));
+  planets.add(new Planet(35, venus, 200, 2.64));
+  planets.add(new Planet(70, earth, 200, 23.44));
+  planets.add(new Planet(55, mars, 200, 25.19));
 }
 
 void draw(){
