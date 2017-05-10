@@ -7,19 +7,20 @@ class Planet{
   private float topx;
   private float topy;
   private float rotate;
+  private float rotateX;
   
-  Planet(float size, PImage image, int trans, float rotate){
+  Planet(float size, PImage image, int trans, float rotate, float rotateX){
     noStroke();
     shape = createShape(SPHERE, size);
     shape.setTexture(image);
     this.trans = trans;
     this.rotate = rotate;
+    this.rotateX = rotateX;
   }
   
   public void showPlanet(){
      emissive(0,0,0);
      translate(trans, 0);
-     rotateX(degrees(rotate));
      shape(shape); 
   }
   
@@ -28,9 +29,18 @@ class Planet{
     stroke(255,255,255);
     noFill();
     x = trans;
-    topx = -1000 * i * 1.5;
+    topx = -1000 * i * 1.75;
     topy = x * -3 * i;
     y = x * 1.5 * i;
     ellipse(x,y,topx,topy);
   }
+  
+  public float getRotate(){
+     return rotate;
+  }
+  
+  public float getOrbit(){
+    return rotateX;  
+  }
+  
 }
