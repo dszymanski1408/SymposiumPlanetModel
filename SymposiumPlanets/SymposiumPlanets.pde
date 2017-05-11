@@ -30,17 +30,5 @@ void setup(){
 void draw(){
   background(back);
   ambientLight(255,255,255);
-  pushMatrix();
-    translate(-100, 0);
-    planets.get(0).showPlanet();
-  popMatrix();
-  for(int i = 1; i < planets.size(); i++){
-    pushMatrix();
-      rotateX(planets.get(i).getRotate());
-      planets.get(i).drawEllipse(i);
-      //float orbit = planets.get(i).getOrbit();
-      //rotateY(orbit += i);
-      planets.get(i).showPlanet();
-    popMatrix();
-  }
+  
 }

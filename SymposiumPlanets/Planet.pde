@@ -20,7 +20,6 @@ class Planet{
   
   public void showPlanet(){
      emissive(0,0,0);
-     translate(trans, 0);
      shape(shape); 
   }
   
@@ -41,6 +40,10 @@ class Planet{
   
   public float getOrbit(){
     return rotateX;  
+  }
+  
+  public float getTrans(){
+     return trans; 
   }
   
 }
