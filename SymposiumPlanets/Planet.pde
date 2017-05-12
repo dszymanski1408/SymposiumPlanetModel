@@ -24,13 +24,13 @@ class Planet{
   }
   
   public void drawEllipse(int i){
-    ellipseMode(CORNER);
+    ellipseMode(CENTER);
     stroke(255,255,255);
     noFill();
-    x = trans;
-    topx = -1000 * i * 1.75;
-    topy = x * -3 * i;
-    y = x * 1.5 * i;
+    x = -100;
+    y = 0;
+    topx = trans * 2 * i;
+    topy = trans * 3 * i;
     ellipse(x,y,topx,topy);
   }
   
@@ -42,8 +42,11 @@ class Planet{
     return rotateX;  
   }
   
-  public float getTrans(){
+  public int getTrans(){
+     return trans; 
+  } 
+  
+  public float getTransF(){
      return trans; 
   }
-  
 }

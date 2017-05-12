@@ -32,15 +32,61 @@ void draw(){
   ambientLight(255,255,255);
   pushMatrix();
     rotateX(planets.get(0).getRotate());
+    //rotateY(radians(frameCount/planets.get(0).getOrbit()));
     rotateY(frameCount/planets.get(0).getOrbit());
     translate(planets.get(0).getTrans(), 0);
     planets.get(0).showPlanet();
   popMatrix();
+  //pushMatrix();
+  //  rotateX(planets.get(1).getRotate());
+  //  planets.get(1).drawEllipse(1);
+  //  //rotateY(radians(frameCount/planets.get(1).getOrbit()));
+  //  rotateZ(frameCount/planets.get(1).getOrbit());
+  //  translate(planets.get(1).getTrans(), 0);
+  //  planets.get(1).showPlanet();
+  //  float x = modelX(876, 0, 0);
+  //  float y = modelY(876, 0, 0);
+  //  float z = modelZ(876, 0, 0);
+  //  if(z > 20){
+  //    translate(0,0,frameCount); 
+  //  }
+  //  println("" + x + ", " + y + ", " + z + "");
+    
+  //popMatrix();
   pushMatrix();
-    rotateX(planets.get(1).getRotate());
-    planets.get(1).drawEllipse(1);
-    rotateY(frameCount/planets.get(1).getOrbit());
-    translate(planets.get(1).getTrans(), 0);
-    planets.get(1).showPlanet();
+    rotate(planets.get(1), 1);
   popMatrix();
+}
+
+void rotate(Planet planet, int num){
+    int cx = -100;
+    int cy = 0;
+    int a = planet.getTrans() * 3 * num; //radius of the circle
+    int b = planet.getTrans() * 2 * num;
+    float t = millis()/4000.0f; //increase to slow down the movement
+    
+    translate(planet.getTrans(), 0);
+    planet.showPlanet();
+    planet.drawEllipse(num);
+    int transFactor = planet.getTrans();
+    
+    float px = modelX(transFactor, 0, 0);
+    float py = modelY(transFactor, 0, 0);
+    
+    for (int i = 1 ; i <= 12; i++) {
+        t = t + 100;
+        int x = (int)(cx + a * cos(t));
+        int y = (int)(cy + b * sin(t));
+        
+        px = x;
+        py = y;
+        
+        textSize(30);
+        text(i, x, y);
+
+        if (i == 10) {
+            textSize(15);
+            text("x: " + x + " y: " + y, x - 50, y - 20);
+        }
+    }
 }
