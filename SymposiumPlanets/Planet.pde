@@ -1,21 +1,26 @@
 class Planet{
 
   private PShape shape;
-  private int trans;
-  private float x;
-  private float y; 
-  private float topx;
-  private float topy;
+
   private float rotate;
   private float rotateX;
+  private String name;
+  private float major;
+  private float minor;
+  private float modelx;
+  private float modely;
+  private float size;
   
-  Planet(float size, PImage image, int trans, float rotate, float rotateX){
+  Planet(String name, float size, PImage image, float rotate, float rotateX, float major, float minor){
     noStroke();
     shape = createShape(SPHERE, size);
     shape.setTexture(image);
-    this.trans = trans;
+    this.size = size;
     this.rotate = rotate;
     this.rotateX = rotateX;
+    this.name = name;
+    this.major = major;
+    this.minor = minor;
   }
   
   public void showPlanet(){
@@ -23,15 +28,11 @@ class Planet{
      shape(shape); 
   }
   
-  public void drawEllipse(int i){
+  public void drawEllipse(){
     ellipseMode(CENTER);
     stroke(255,255,255);
     noFill();
-    x = -100;
-    y = 0;
-    topx = trans * 2 * i;
-    topy = trans * 3 * i;
-    ellipse(x,y,topx,topy);
+    ellipse(25,0,major * 2,minor * 2);
   }
   
   public float getRotate(){
@@ -41,12 +42,36 @@ class Planet{
   public float getOrbit(){
     return rotateX;  
   }
+
+  public String getName(){
+      return name; 
+  }
   
-  public int getTrans(){
-     return trans; 
-  } 
+  public float getMinor(){
+     return minor; 
+  }
   
-  public float getTransF(){
-     return trans; 
+  public float getMajor(){
+     return major; 
+  }
+  
+  public float getModelX(){
+     return modelx; 
+  }
+  
+  public void setModelX(float modelx){
+     this.modelx = modelx;
+  }
+  
+  public float getModelY(){
+     return modely; 
+  }
+  
+  public void setModelY(float modely){
+     this.modely = modely; 
+  }
+  
+  public float getSize(){
+     return size; 
   }
 }

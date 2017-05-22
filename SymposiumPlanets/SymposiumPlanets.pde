@@ -10,83 +10,124 @@ PImage mercury;
 PImage mars;
 PImage earth;
 PImage back;
+PImage moon;
+PImage deimos;
+PImage phobos;
 
 void setup(){
   size(1200,800,P3D);
-  cam = new PeasyCam(this, 3000);
+  cam = new PeasyCam(this, 1500);
   sun = loadImage("sunTexMap.jpg"); 
   venus = loadImage("venusTexMap.jpg");
   mercury = loadImage("mercuryTexMap.jpg");
   mars = loadImage("marsTexMap.jpg");
   earth = loadImage("earthTexMap.jpg");
   back = loadImage("milkyway.jpg");
-  planets.add(new Planet(700, sun, -100, 7.25, 1000));
-  planets.add(new Planet(20, mercury, 867, 0.03, 50));
-  planets.add(new Planet(61, venus, 1036, 2.64, 35.02));
-  planets.add(new Planet(65, earth, 1347, 23.44, 29.78));
-  planets.add(new Planet(36, mars, 1511, 25.19, 24.077));
+  moon = loadImage("moonTexture.jpg");
+  deimos = loadImage("deimosTex.jpg");
+  phobos = loadImage("phobosTex.jpg");
+  //                    ("name", size, image, tilt, speed, major axis, minor axis) 
+  planets.add(new Planet("Sun",450, sun, 7.25, 1000, 0 , 0));
+  planets.add(new Planet("Mercury", 10, mercury, 0.03, 50, 566,563));
+  planets.add(new Planet("Venus",30.5 , venus, 2.64, 35.02, 666, 665));
+  planets.add(new Planet("Earth",32.5, earth, 27.3, 29.78, 749, 748));
+  planets.add(new Planet("Mars",17, mars, 25.19, 24.077, 907, 904));
+  planets.add(new Moon("Moon", planets.get(3), 6.5, moon, 6.68, 5.6 ,41.1, 40.6));
+  planets.add(new Moon("Phobos", planets.get(4), 1.05, phobos, 26.04, 2.1, 18.45, 18.45));
+  planets.add(new Moon("Deimos", planets.get(4), 0.8, deimos, 27.58 , 1.3 , 20.9, 20.9));
 }
 
 void draw(){
   background(back);
   ambientLight(255,255,255);
   pushMatrix();
-    rotateX(planets.get(0).getRotate());
-    //rotateY(radians(frameCount/planets.get(0).getOrbit()));
-    rotateY(frameCount/planets.get(0).getOrbit());
-    translate(planets.get(0).getTrans(), 0);
     planets.get(0).showPlanet();
+    textSize(50);
+    text(planets.get(0).getName(), 0 - 25, 0 - planets.get(0).getSize() - 50);
   popMatrix();
   //pushMatrix();
-  //  rotateX(planets.get(1).getRotate());
-  //  planets.get(1).drawEllipse(1);
-  //  //rotateY(radians(frameCount/planets.get(1).getOrbit()));
-  //  rotateZ(frameCount/planets.get(1).getOrbit());
-  //  translate(planets.get(1).getTrans(), 0);
-  //  planets.get(1).showPlanet();
-  //  float x = modelX(876, 0, 0);
-  //  float y = modelY(876, 0, 0);
-  //  float z = modelZ(876, 0, 0);
-  //  if(z > 20){
-  //    translate(0,0,frameCount); 
-  //  }
-  //  println("" + x + ", " + y + ", " + z + "");
-    
+  //  rotate(planets.get(1));
   //popMatrix();
-  pushMatrix();
-    rotate(planets.get(1), 1);
-  popMatrix();
+  //pushMatrix();
+  //  rotate(planets.get(2));
+  //popMatrix();
+  //pushMatrix();
+  //  rotate(planets.get(3));
+  //popMatrix();
+  //pushMatrix();
+  //  rotate((Moon) planets.get(5));
+  //popMatrix();
+  //pushMatrix();
+  //  rotate(planets.get(4));
+  //popMatrix();
+  //pushMatrix();
+  //  rotate((Moon) planets.get(6));
+  //popMatrix();
+  //pushMatrix();
+  //  rotate((Moon) planets.get(7));
+  //popMatrix();
+  for(int i = 1; i < planets.size(); i++){
+     pushMatrix();
+     Planet planet = planets.get(i);
+     if(planet instanceof Moon){
+       rotate((Moon) planet);
+     }
+     else{
+       rotate(planet);
+     }
+     popMatrix();
+  }
 }
 
-void rotate(Planet planet, int num){
-    int cx = -100;
+void rotate(Planet planet){
+    int cx = 25;
     int cy = 0;
-    int a = planet.getTrans() * 3 * num; //radius of the circle
-    int b = planet.getTrans() * 2 * num;
-    float t = millis()/4000.0f; //increase to slow down the movement
+    float a = planet.getMinor();
+    float b = planet.getMajor();
+    float num = planet.getOrbit();
+    float t = millis()/(1000.0 * num); //increase to slow down the movement
     
-    translate(planet.getTrans(), 0);
+    planet.drawEllipse();
+    
+    t = t + 100;
+    int x = (int)(cx + a * cos(t));
+    int y = (int)(cy + b * sin(t));
+     
+    textSize(20);
+    text(planet.getName(), x - 25, y - planet.getSize() - 20);
+    
+    translate(x, y);
+    rotateY(radians(planet.getRotate()));
+    rotateZ(PI/2);
+    rotateY(millis()/3000.0);
     planet.showPlanet();
-    planet.drawEllipse(num);
-    int transFactor = planet.getTrans();
     
-    float px = modelX(transFactor, 0, 0);
-    float py = modelY(transFactor, 0, 0);
-    
-    for (int i = 1 ; i <= 12; i++) {
-        t = t + 100;
-        int x = (int)(cx + a * cos(t));
-        int y = (int)(cy + b * sin(t));
-        
-        px = x;
-        py = y;
-        
-        textSize(30);
-        text(i, x, y);
+    planet.setModelX(modelX(0,0,0));
+    planet.setModelY(modelY(0,0,0));
+}
 
-        if (i == 10) {
-            textSize(15);
-            text("x: " + x + " y: " + y, x - 50, y - 20);
-        }
-    }
+void rotate(Moon moon){
+    Planet origin = moon.getParent();
+ 
+    float cx = origin.getModelX();
+    float cy = origin.getModelY();
+    float a = moon.getMinor();
+    float b = moon.getMajor();
+    float num = moon.getOrbit();
+    float t = millis()/(1000.0 * num); //increase to slow down the movement
+    
+    moon.drawEllipse();
+    
+    t = t + 100;
+    int x = (int)(cx + a * cos(t));
+    int y = (int)(cy + b * sin(t));
+     
+    textSize(10);
+    text(moon.getName(), x, y + moon.getSize() + 10);
+        
+    translate(x, y);
+    rotateY(radians(moon.getRotate()));
+    rotateZ(PI/2);
+    rotateY(millis()/3000.0);
+    moon.showPlanet();
 }
