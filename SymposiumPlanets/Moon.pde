@@ -8,6 +8,8 @@ class Moon extends Planet{
   private float major;
   private float minor;
   private Planet origin;
+  private float modelx;
+  private float modely;
   
   Moon(String name, Planet origin, float size, PImage image, float rotate, float rotateX, float major, float minor){
     super(name, size, image, rotate, rotateX, major, minor);
@@ -56,5 +58,21 @@ class Moon extends Planet{
   
   public Planet getParent(){
      return origin; 
+  }
+  
+    public float getModelX(){
+     return modelx; 
+  }
+  
+  public void setModelX(float modelx){
+     this.modelx = modelx;
+  }
+  
+  public float getModelY(){
+     return modely; 
+  }
+  
+  public void setModelY(float modely){
+     this.modely = modely; 
   }
 }
