@@ -16,10 +16,12 @@ PImage phobos;
 PImage mantle;
 PImage outerCore;
 PImage innerCore;
+PImage jupiter;
+PImage saturn;
 
 void setup(){
   size(1200,800,P3D);
-  cam = new PeasyCam(this, 1500);
+  cam = new PeasyCam(this, 2500);
   sun = loadImage("sunTexMap.jpg"); 
   venus = loadImage("venusTexMap.jpg");
   mercury = loadImage("mercuryTexMap.jpg");
@@ -32,21 +34,27 @@ void setup(){
   mantle = loadImage("magmaEarth.jpg");
   outerCore = loadImage("outerCore.png");
   innerCore = loadImage("innerCore.jpg");
-  //                    ("name", size, image, tilt, speed, major axis, minor axis) 
-  planets.add(new Planet("Sun",450, sun, 7.25, 1000, 0 , 0));
-  planets.add(new Planet("Mercury", 10, mercury, 0.03, 50, 566,563));
-  planets.add(new Planet("Venus",30.5 , venus, 2.64, 35.02, 666, 665));
-  planets.add(new Planet("Earth",32.5, earth, 27.3, 29.78, 749, 748));
-  planets.add(new Planet("Mars",17, mars, 25.19, 24.077, 907, 904));
+  jupiter = loadImage("jupiterMap.jpg");
+  saturn = loadImage("saturnMap.jpg");
+  //                    ("name", size, image, tilt, speed, major axis, minor axis, if gass giant) 
+  planets.add(new Planet("Sun",700, sun, 7.25, 1000, 0 , 0, false));
+  planets.add(new Planet("Mercury", 10, mercury, 0.03, 50, 566 + 350,563 + 350, false));
+  planets.add(new Planet("Venus",30.5 , venus, 2.64, 35.02, 666 + 450, 665 + 450, false));
+  planets.add(new Planet("Earth",32.5, earth, 27.3, 29.78, 749 + 450, 748 + 450, false));
+  planets.add(new Planet("Mars",17, mars, 25.19, 24.077, 907 + 450, 904 + 450, false));
+  //                  ("name", parent planet, size, image, tilt, speed, major axis, minor axis)
   planets.add(new Moon("Moon", planets.get(3), 6.5, moon, 6.68, 5.6 ,41.1, 40.6));
   planets.add(new Moon("Phobos", planets.get(4), 1.05, phobos, 26.04, 2.1, 18.45, 18.45));
   planets.add(new Moon("Deimos", planets.get(4), 0.8, deimos, 27.58 , 1.3 , 20.9, 20.9));
+  planets.add(new Planet("Jupiter", 200, jupiter, 6.09, 13.7, 2500, 2200, true));
+  planets.add(new Planet("Saturn", 150, saturn, 5.51, 9.69, 3200, 3500, true));
 }
 
 void draw(){
   background(back);
   ambientLight(255,255,255);
   pushMatrix();
+    //ring1.ring(0,0,500,0,0,600); 
     planets.get(0).showPlanet();
     fill(255,255,255); 
     textSize(50);
@@ -84,6 +92,12 @@ void draw(){
     }
     else if(key == '7'){
       thread("changeCam7");
+    }
+    else if(key == '8'){
+      thread("changeCam8"); 
+    }
+    else if(key == '9'){
+      thread("changeCam9");
     }
   }
 }
@@ -124,11 +138,23 @@ void changeCam7(){
   }
 }
 
+void changeCam8(){
+  if(millis() % 1 == 0){
+     cam.lookAt(planets.get(8).getModelX(), planets.get(8).getModelY() + 20, 0);
+  }
+}
+
+void changeCam9(){
+  if(millis() % 1 == 0){
+     cam.lookAt(planets.get(9).getModelX(), planets.get(9).getModelY() + 20, 0);
+  }
+}
+
 void rotate(Planet planet){
     int cx = 25;
     int cy = 0;
-    float a = planet.getMinor();
-    float b = planet.getMajor();
+    float a = planet.getMajor();
+    float b = planet.getMinor();
     float num = planet.getOrbit();
     float t = millis()/(1000.0 * num); //increase to slow down the movement
     
@@ -139,24 +165,35 @@ void rotate(Planet planet){
     int y = (int)(cy + b * sin(t));
     
     fill(255,255,255); 
-    textSize(20);
-    text(planet.getName(), x - 25, y - planet.getSize() - 20);
+    textSize(planet.getSize()/1.5);
+    text(planet.getName(), x - 25, y - planet.getSize() - planet.getSize()/1.5);
     
     translate(x, y);
     
-    noStroke();
+    if(planet.getName().equals("Saturn")){
+      fill(222,184,135);
+      noStroke();
+      pushMatrix();
+        rotateY(radians(90));
+        ring(planet.getModelX() / x - 20, planet.getModelY() / y,planet.getSize() * 2, planet.getSize() * 1.5);
+      popMatrix();
+    }
     
-    PShape first = createShape(SPHERE, planet.getSize()/1.1);
-    first.setTexture(mantle);
-    shape(first);
+    if(!planet.getType()){
+      noStroke();
     
-    PShape second = createShape(SPHERE, planet.getSize()/1.75);
-    second.setTexture(outerCore);
-    shape(second);
+      PShape first = createShape(SPHERE, planet.getSize()/1.1);
+      first.setTexture(mantle);
+      shape(first);
     
-    PShape third = createShape(SPHERE, planet.getSize()/2.75);
-    third.setTexture(innerCore);
-    shape(third);
+      PShape second = createShape(SPHERE, planet.getSize()/1.75);
+      second.setTexture(outerCore);
+      shape(second);
+    
+      PShape third = createShape(SPHERE, planet.getSize()/2.75);
+      third.setTexture(innerCore);
+      shape(third);
+    }
     
     rotateY(radians(planet.getRotate()));
     rotateZ(PI/2);
@@ -184,7 +221,7 @@ void rotate(Moon moon){
     int y = (int)(cy + b * sin(t));
      
     fill(255,255,255);  
-    textSize(10);
+    textSize(moon.getSize()/2);
     text(moon.getName(), x, y + moon.getSize() + 10);
         
     translate(x, y);
@@ -195,4 +232,41 @@ void rotate(Moon moon){
     
     moon.setModelX(modelX(0,0,0));
     moon.setModelY(modelY(0,0,0));
+}
+
+void ring(float cx1, float cy1, float r1 , float r2){
+  beginShape();
+    buildCircle(cx1,cy1,r1,true);
+    buildCircle(cx1,cy1,r2,false); 
+  endShape();
+}
+  
+void buildCircle(float cx, float cy, float r, boolean isClockwise){
+  int numSteps = 10;
+  float inc = TWO_PI/numSteps;
+       
+  if (isClockwise){
+    curveVertex(cx+r*cos(-inc),cy+r*sin(-inc));
+      
+    for (float theta=0; theta<TWO_PI-0.01; theta+=inc){
+      curveVertex(cx+r*cos(theta),cy+r*sin(theta));
+    }
+    curveVertex(cx+r,cy);
+      
+    curveVertex(cx+r*cos(inc),cy+r*sin(inc));
+      
+    vertex(cx+r,cy);
+    }
+    else{
+      vertex(cx+r,cy);
+      
+      curveVertex(cx+r*cos(inc),cy+r*sin(inc));
+          
+      for (float theta=TWO_PI; theta>0.01; theta-=inc){
+        curveVertex(cx+r*cos(theta),cy+r*sin(theta));
+      }
+      curveVertex(cx+r,cy);
+      
+      curveVertex(cx+r*cos(TWO_PI-inc),cy+r*sin(TWO_PI -inc));
+   }  
 }

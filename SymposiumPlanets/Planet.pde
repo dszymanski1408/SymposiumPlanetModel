@@ -10,8 +10,9 @@ class Planet{
   private float modelx;
   private float modely;
   private float size;
+  private boolean gas;
   
-  Planet(String name, float size, PImage image, float rotate, float rotateX, float major, float minor){
+  Planet(String name, float size, PImage image, float rotate, float rotateX, float major, float minor, boolean gas){
     noStroke();
     shape = createShape(SPHERE, size);
     shape.setTexture(image);
@@ -21,6 +22,7 @@ class Planet{
     this.name = name;
     this.major = major;
     this.minor = minor;
+    this.gas = gas;
   }
   
   public void showPlanet(){
@@ -73,5 +75,9 @@ class Planet{
   
   public float getSize(){
      return size; 
+  }
+  
+  public boolean getType(){
+     return gas; 
   }
 }
