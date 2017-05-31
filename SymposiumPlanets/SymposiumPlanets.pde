@@ -47,7 +47,7 @@ void setup(){
   planets.add(new Moon("Phobos", planets.get(4), 1.05, phobos, 26.04, 2.1, 18.45, 18.45));
   planets.add(new Moon("Deimos", planets.get(4), 0.8, deimos, 27.58 , 1.3 , 20.9, 20.9));
   planets.add(new Planet("Jupiter", 200, jupiter, 6.09, 13.7, 2500, 2200, true));
-  planets.add(new Planet("Saturn", 150, saturn, 5.51, 9.69, 3200, 3500, true));
+  planets.add(new Planet("Saturn", 130, saturn, 5.51, 9.69, 3200, 3500, true));
 }
 
 void draw(){
@@ -171,11 +171,17 @@ void rotate(Planet planet){
     translate(x, y);
     
     if(planet.getName().equals("Saturn")){
-      fill(222,184,135);
-      noStroke();
       pushMatrix();
+        noStroke();
+        fill(139,69,19);
         rotateY(radians(90));
-        ring(planet.getModelX() / x - 20, planet.getModelY() / y,planet.getSize() * 2, planet.getSize() * 1.5);
+        ring(planet.getModelX() / x, planet.getModelY() / y,planet.getSize() * 1.40, planet.getSize() * 1.30);
+        fill(222,184,135);
+        ring(planet.getModelX() / x, planet.getModelY() / y,planet.getSize() * 1.55, planet.getSize() * 1.40);
+        fill(78,40,10);
+        ring(planet.getModelX() / x, planet.getModelY() / y,planet.getSize() * 1.90, planet.getSize() * 1.65);
+        fill(141,72,19);
+        ring(planet.getModelX() / x, planet.getModelY() / y,planet.getSize() * 2, planet.getSize() * 1.95);
       popMatrix();
     }
     
