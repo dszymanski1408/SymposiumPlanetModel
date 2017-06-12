@@ -40,20 +40,33 @@ void setup(){
   saturn = loadImage("saturnMap.jpg");
   uranus = loadImage("uranusTex.jpg");
   neptune = loadImage("neptuneMap.jpg");
-  //                    ("name", size, image, tilt, speed, major axis, minor axis, if gass giant) 
-  planets.add(new Planet("Sun",700, sun, 7.25, 1000, 0 , 0, false));
-  planets.add(new Planet("Mercury", 10, mercury, 0.03, 20, 566 + 350,563 + 350, false));
-  planets.add(new Planet("Venus",30.5 , venus, 2.64, 35.02, 666 + 450, 665 + 450, false));
-  planets.add(new Planet("Earth",32.5, earth, 27.3, 29.78, 749 + 450, 748 + 450, false));
-  planets.add(new Planet("Mars",17, mars, 25.19, 24.77, 907 + 450, 904 + 450, false));
-  //                  ("name", parent planet, size, image, tilt, speed, major axis, minor axis)
-  planets.add(new Moon("Moon", planets.get(3), 6.5, moon, 6.68, 5.6 ,41.1, 40.6));
-  planets.add(new Moon("Phobos", planets.get(4), 1.05, phobos, 26.04, 2.1, 18.45, 18.45));
-  planets.add(new Moon("Deimos", planets.get(4), 0.8, deimos, 27.58 , 1.3 , 20.9, 20.9));
-  planets.add(new Planet("Jupiter", 200, jupiter, 6.09, 13.7, 2100, 2000, true));
-  planets.add(new Planet("Saturn", 130, saturn, 5.51, 9.69, 2600, 2800, true));
-  planets.add(new Planet("Uranus", 65, uranus, 90, 6.8, 4000, 3600, true));
-  planets.add(new Planet("Neptune", 62, neptune, 28, 5.43, 4300, 4200, true));
+  //                    ("name", size, image, tilt, speed, major axis, minor axis, if gass giant, speed factor) 
+  planets.add(new Planet("Sun",700, sun, 7.25, 1000, 0 , 0, false, 0));
+  
+  planets.add(new Planet("Mercury", 10, mercury, 0.03, 20, 566 + 350,563 + 350, false, 17.31));
+  
+  planets.add(new Planet("Venus",30.5 , venus, 2.64, 35.02, 666 + 450, 665 + 450, false, 13.4));
+  
+  planets.add(new Planet("Earth",32.5, earth, 27.3, 29.78, 749 + 450, 748 + 450, false, 6.26));
+  
+  planets.add(new Planet("Mars",17, mars, 25.19, 24.07, 907 + 450, 904 + 450, false, 4.02));
+  
+  //                  ("name", parent planet, size, image, tilt, speed, major axis, minor axis, speed factor)
+  planets.add(new Moon("Moon", planets.get(3), 6.5, moon, 6.68, 5.6 ,41.1, 40.6, 1));
+  
+  planets.add(new Moon("Phobos", planets.get(4), 1.05, phobos, 26.04, 2.1, 18.45, 18.45, 1));
+  
+  planets.add(new Moon("Deimos", planets.get(4), 0.8, deimos, 27.58 , 1.3 , 20.9, 20.9, 1));
+  
+  
+  //                    ("name", size, image, tilt, speed, major axis, minor axis, if gass giant, speed factor) 
+  planets.add(new Planet("Jupiter", 200, jupiter, 6.09, 13.7, 2100, 2000, true, 1));
+  
+  planets.add(new Planet("Saturn", 130, saturn, 5.51, 9.69, 2600, 2800, true, 1));
+  
+  planets.add(new Planet("Uranus", 65, uranus, 90, 6.8, 4000, 3600, true, 1));
+  
+  planets.add(new Planet("Neptune", 62, neptune, 28, 5.43, 4300, 4200, true, 1));
 }
 
 void draw(){
@@ -77,6 +90,7 @@ void draw(){
      }
      popMatrix();
   }
+  println(millis());
   if(keyPressed){
     if(key == '1'){
       thread("changeCam1");
@@ -162,7 +176,8 @@ void rotate(Planet planet, int count){
     float a = planet.getMajor();
     float b = planet.getMinor();
     float num = planet.getOrbit();
-    float t = millis()/((4000.0 * count) / (num / count * 0.2)); //increase to slow down the movement
+    float factor = planet.getFactor();
+    float t = millis()/(((4000.0 * count) / (num / count * 0.2)) * factor); //increase to slow down the movement
    
     planet.drawEllipse();
     

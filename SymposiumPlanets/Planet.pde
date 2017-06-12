@@ -11,8 +11,9 @@ class Planet{
   private float modely;
   private float size;
   private boolean gas;
+  private float factor;
   
-  Planet(String name, float size, PImage image, float rotate, float rotateX, float major, float minor, boolean gas){
+  Planet(String name, float size, PImage image, float rotate, float rotateX, float major, float minor, boolean gas, float factor){
     noStroke();
     shape = createShape(SPHERE, size);
     shape.setTexture(image);
@@ -23,6 +24,7 @@ class Planet{
     this.major = major;
     this.minor = minor;
     this.gas = gas;
+    this.factor = factor;
   }
   
   public void showPlanet(){
@@ -79,5 +81,9 @@ class Planet{
   
   public boolean getType(){
      return gas; 
+  }
+  
+  public float getFactor(){
+     return factor; 
   }
 }

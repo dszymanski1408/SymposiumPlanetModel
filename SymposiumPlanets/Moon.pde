@@ -11,8 +11,8 @@ class Moon extends Planet{
   private float modelx;
   private float modely;
   
-  Moon(String name, Planet origin, float size, PImage image, float rotate, float rotateX, float major, float minor){
-    super(name, size, image, rotate, rotateX, major, minor, true);
+  Moon(String name, Planet origin, float size, PImage image, float rotate, float rotateX, float major, float minor, float factor){
+    super(name, size, image, rotate, rotateX, major, minor, true, factor);
     //noStroke();
     //shape = createShape(SPHERE, size);
     //shape.setTexture(image);
