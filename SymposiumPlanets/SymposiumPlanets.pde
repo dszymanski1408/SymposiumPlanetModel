@@ -60,13 +60,13 @@ void setup(){
   
   
   //                    ("name", size, image, tilt, speed, major axis, minor axis, if gass giant, speed factor) 
-  planets.add(new Planet("Jupiter", 200, jupiter, 6.09, 13.7, 2100, 2000, true, 1));
+  planets.add(new Planet("Jupiter", 200, jupiter, 6.09, 13.7, 2100, 2000, true, 1.65));
   
-  planets.add(new Planet("Saturn", 130, saturn, 5.51, 9.69, 2600, 2800, true, 1));
+  planets.add(new Planet("Saturn", 130, saturn, 5.51, 9.69, 2600, 2800, true, 1.64));
   
-  planets.add(new Planet("Uranus", 65, uranus, 90, 6.8, 4000, 3600, true, 1));
+  planets.add(new Planet("Uranus", 65, uranus, 90, 6.8, 4000, 3600, true, 1.9));
   
-  planets.add(new Planet("Neptune", 62, neptune, 28, 5.43, 4300, 4200, true, 1));
+  planets.add(new Planet("Neptune", 62, neptune, 28, 5.43, 4300, 4200, true, 1.785));
 }
 
 void draw(){
